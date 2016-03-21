@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PhoneDirectory</string>
+    <string name="title_employee_detail">Employee Detail</string>
+    <string name="app_label">org.houstonmethodist.phonedirectory</string>
+    <string name="search_hint">last name or first name</string>
+    <string name="no_data_available">Please Search ...</string>
+    <string name="search_title">Search</string>
+</resources>
