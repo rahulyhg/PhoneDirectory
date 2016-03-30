@@ -3,6 +3,10 @@
     <string name="title_employee_detail">Employee Detail</string>
     <string name="app_label">org.houstonmethodist.phonedirectory</string>
     <string name="search_hint">last name or first name</string>
-    <string name="no_data_available">Please Search ...</string>
+    <string name="no_data_available">Searching ...</string>
     <string name="search_title">Search</string>
+    <string name="checkWifi">Check for data service end point. Please wait ...</string>
+    <string name="Search">Please search employee by last name or first name ...</string>
+    <string name="NoWifi">You are not connected to Methodist internal wifi network. Service is not available.</string>
+    <string name="NoMatch">No matching record ...</string>
 </resources>

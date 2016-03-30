@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -38,7 +37,7 @@ public class EmployeeDetailActivity extends AppCompatActivity {
         phone = getIntent().getStringExtra(EmployeeDetailFragment.ARG_Phone);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+        if (phone==null || phone.equals("") || ActivityCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             fab.setVisibility(View.GONE);
         } else {
             fab.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +99,7 @@ public class EmployeeDetailActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -111,7 +111,11 @@ public class EmployeeDetailActivity extends AppCompatActivity {
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            NavUtils.navigateUpTo(this, new Intent(this, EmployeeListActivity.class));
+            //NavUtils.navigateUpTo(this, new Intent(this, EmployeeListActivity.class));
+            Intent upIntent = NavUtils.getParentActivityIntent(this);
+            //if the parent is at the stack top of the queue, don't recreate the activity
+            upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            NavUtils.navigateUpTo(this, upIntent);
             return true;
         }
         return super.onOptionsItemSelected(item);

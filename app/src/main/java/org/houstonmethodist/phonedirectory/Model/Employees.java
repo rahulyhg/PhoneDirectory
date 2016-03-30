@@ -23,6 +23,12 @@ public class Employees {
      */
     public static List<Employee> ITEMS = new ArrayList<Employee>();
 
+
+    public static boolean Ping() throws IOException {
+        String path="Home";
+        return HttpClientUtil.serviceAvailable(path);
+
+    }
     public static void Search(String searchText) throws IOException {
         String path="Search/"+searchText;
         ITEMS = HttpClientUtil.getEmployees(path);

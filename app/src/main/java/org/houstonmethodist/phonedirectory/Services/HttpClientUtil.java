@@ -2,6 +2,10 @@ package org.houstonmethodist.phonedirectory.Services;
 
 
 
+import android.content.Context;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.util.Log;
 
 import org.apache.commons.io.IOUtils;
@@ -26,6 +30,41 @@ import java.util.List;
  */
 public class HttpClientUtil {
     public final static String baseUrl="http://10.110.39.21/PhoneDirectoryService/Api/";
+
+    public static boolean serviceAvailable(String path) throws IOException {
+        URL url = new URL(baseUrl+path);
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setRequestMethod("GET");
+        urlConnection.setReadTimeout(5*1000);
+        String result = null;
+        InputStream instream = null;
+
+        try {
+
+            urlConnection.connect();
+            instream = new BufferedInputStream(urlConnection.getInputStream());
+            int code=urlConnection.getResponseCode();
+            if(code==200) {
+                result = readStream(instream);
+            }
+            int count=Integer.parseInt(result);
+            return count>100;
+
+        } catch (Exception e) {
+            Log.i("error", e.getMessage());
+            // manage exceptions
+        } finally {
+            urlConnection.disconnect();
+            if (instream != null) {
+                try {
+                    instream.close();
+                } catch (Exception exc) {
+
+                }
+            }
+        }
+        return false;
+    }
 
     public static List<Employees.Employee> getEmployees(String path) throws IOException {
 
@@ -91,5 +130,15 @@ public class HttpClientUtil {
         }
 
         return list;
+    }
+
+    public static String getWifiName(Context context) {
+        String ssid = "none";
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+        ssid = wifiInfo.getSSID();
+        ssid=ssid.replace("\"", "");
+
+        return ssid;
     }
 }

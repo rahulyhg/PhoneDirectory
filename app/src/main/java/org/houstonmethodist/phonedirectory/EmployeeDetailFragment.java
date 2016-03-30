@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import org.houstonmethodist.phonedirectory.Model.Employees;
 
 /**
@@ -40,11 +40,10 @@ public class EmployeeDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
+            // Load the content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
             mItem = Employees.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
-
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
@@ -62,7 +61,7 @@ public class EmployeeDetailFragment extends Fragment {
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.employee_Name)).setText(mItem.LastName + ", " + mItem.FirstName);
 
-            ((TextView) rootView.findViewById(R.id.employee_Email)).setText("Email: " + mItem.Email);
+            ((TextView) rootView.findViewById(R.id.employee_Email)).setText(Html.fromHtml("<a href=\"mailto:" + mItem.Email + "\">" + mItem.Email + "</a>"));
 
             ((TextView) rootView.findViewById(R.id.employee_Phone)).setText("Phone: " + mItem.Phone);
 
